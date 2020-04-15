@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Swordman : PlayerController
 {
+	float dirFacing;
+	bool lockDir = false;
+	float walkBackSlowDown = (float)0.4;
 
     private void Start()
     {
-        m_CapsulleCollider  = this.transform.GetComponent<CapsuleCollider2D>();
+        m_CapsuleCollider  = this.transform.GetComponent<CapsuleCollider2D>();
         m_Anim = this.transform.Find("model").GetComponent<Animator>();
         m_rigidbody = this.transform.GetComponent<Rigidbody2D>();
     }
@@ -15,7 +18,14 @@ public class Swordman : PlayerController
 
     private void Update()
     {
-        checkInput();
+    	dirFacing = Input.mousePosition.x/Screen.width - (float)0.5;
+    	if (dirFacing > 0 && !lockDir) {
+    		transform.localScale = new Vector3(-1, 1, 1);
+    	} else if (dirFacing <= 0 && !lockDir) {
+    		transform.localScale = new Vector3(1, 1, 1);
+    	}
+
+    	checkInput();
 
         if (m_rigidbody.velocity.magnitude > 30)
         {
@@ -78,24 +88,42 @@ public class Swordman : PlayerController
         {
             m_Anim.Play("Die");
         }
-
+		
         // 기타 이동 인풋.
         if (Input.GetKey(KeyCode.D))
         {
+        	//if walking forward, walk in normal speed
+			if (dirFacing >= 0) {
+        		transform.transform.Translate(new Vector3(m_MoveX * MoveSpeed * Time.deltaTime, 0, 0));
+        	} 
+        	//if walking backwards, walk in slower speed
+        	else {
+        		transform.transform.Translate(new Vector3(m_MoveX * walkBackSlowDown*MoveSpeed * Time.deltaTime, 0, 0));
+        	}
 
-            transform.transform.Translate(new Vector3(m_MoveX * MoveSpeed * Time.deltaTime, 0, 0));
-           
-           	if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            	transform.localScale = new Vector3(-1, 1, 1);
+           	if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            	// transform.localScale = new Vector3(-1, 1, 1);
+           		lockDir = true;
+           	else
+           		lockDir = false;
         }
 
         else if (Input.GetKey(KeyCode.A))
         {
-
-            transform.transform.Translate(new Vector3(m_MoveX * MoveSpeed * Time.deltaTime, 0, 0));
+			//if walking forward, walk in normal speed
+			if (dirFacing < 0) {
+        		transform.transform.Translate(new Vector3(m_MoveX * MoveSpeed * Time.deltaTime, 0, 0));
+        	} 
+        	//if walking backwards, walk in slower speed
+        	else {
+        		transform.transform.Translate(new Vector3(m_MoveX * walkBackSlowDown*MoveSpeed * Time.deltaTime, 0, 0));
+        	}
             
-            if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            	transform.localScale = new Vector3(1, 1, 1);
+            if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            	// transform.localScale = new Vector3(1, 1, 1);
+            	lockDir = true;
+            else 
+            	lockDir = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -107,7 +135,7 @@ public class Swordman : PlayerController
             {
                 if (!IsSit)
                 {
-                    perfromJump();
+                    performJump();
                 }
                 else
                 {

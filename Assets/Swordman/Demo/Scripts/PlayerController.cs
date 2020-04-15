@@ -13,7 +13,7 @@ public abstract class PlayerController :MonoBehaviour
     public bool Is_DownJump_GroundCheck = false;   // 다운 점프를 하는데 아래 블록인지 그라운드인지 알려주는 불값
     protected float m_MoveX;
     public Rigidbody2D m_rigidbody;
-    protected CapsuleCollider2D m_CapsulleCollider;
+    protected CapsuleCollider2D m_CapsuleCollider;
     protected Animator m_Anim;
 
     [Header("[Setting]")]
@@ -23,41 +23,29 @@ public abstract class PlayerController :MonoBehaviour
 
     protected void AnimUpdate()
     {
-
-
         if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {
-
-
                 m_Anim.Play("Attack");
             }
             else
             {
-
                 if (m_MoveX == 0)
                 {
                     if (!OnceJumpRayCheck)
                         m_Anim.Play("Idle");
-
                 }
                 else
                 {
-
                     m_Anim.Play("Run");
                 }
-
             }
-
-
-
         }
-
     }
 
 
-    protected void perfromJump()
+    protected void performJump()
     {
         m_Anim.Play("Jump");
 
@@ -68,16 +56,13 @@ public abstract class PlayerController :MonoBehaviour
         OnceJumpRayCheck = true;
         isGrounded = false;
 
-
         currentJumpCount++;
-
     }
 
     protected void DownJump()
     {
         if (!isGrounded)
             return;
-
 
         if (!Is_DownJump_GroundCheck)
         {
@@ -86,19 +71,18 @@ public abstract class PlayerController :MonoBehaviour
             m_rigidbody.AddForce(-Vector2.up * 10);
             isGrounded = false;
 
-            m_CapsulleCollider.enabled = false;
+            m_CapsuleCollider.enabled = false;
 
-            StartCoroutine(GroundCapsulleColliderTimmerFuc());
-
+            StartCoroutine(GroundCapsuleColliderTimerFuc());
         }
 
 
     }
 
-    IEnumerator GroundCapsulleColliderTimmerFuc()
+    IEnumerator GroundCapsuleColliderTimerFuc()
     {
         yield return new WaitForSeconds(0.3f);
-        m_CapsulleCollider.enabled = true;
+        m_CapsuleCollider.enabled = true;
     }
 
 
