@@ -23,7 +23,7 @@ public abstract class PlayerController :MonoBehaviour
 
     protected void AnimUpdate()
     {
-        if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && !m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Roll"))
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Swordman : PlayerController
 {
 	float dirFacing;
-	bool lockDir = false;
+	bool lockAnim = false;
 	float walkBackSlowDown = (float)0.4;
 
     private void Start()
@@ -18,10 +18,14 @@ public class Swordman : PlayerController
 
     private void Update()
     {
-    	dirFacing = Input.mousePosition.x/Screen.width - (float)0.5;
-    	if (dirFacing > 0 && !lockDir) {
+    	if (!lockAnim) {
+    		dirFacing = Input.mousePosition.x/Screen.width - (float)0.5;
+    	}
+    	
+    	//turn the player to face the right direction while rolling or attacking
+    	if (dirFacing > 0 && !lockAnim) {
     		transform.localScale = new Vector3(-1, 1, 1);
-    	} else if (dirFacing <= 0 && !lockDir) {
+    	} else if (dirFacing <= 0 && !lockAnim) {
     		transform.localScale = new Vector3(1, 1, 1);
     	}
 
@@ -35,61 +39,97 @@ public class Swordman : PlayerController
 
 
     public void checkInput()
-    {
-        if (Input.GetKeyDown(KeyCode.S))  //아래 버튼 눌렀을때. 
-        {
-            IsSit = true;
-            m_Anim.Play("Sit");
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            m_Anim.Play("Idle");
-            IsSit = false;
-        }
+    {	
+		if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") ||
+       		m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Roll"))
+       		lockAnim = true;
+       	else
+       		lockAnim = false;
 
-        // sit나 die일때 애니메이션이 돌때는 다른 애니메이션이 되지 않게 한다. 
-        if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Sit") || m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (currentJumpCount < JumpCount)  // 0 , 1
-                {
-                    DownJump();
-                }
-            }
-            return;
-        }
+       	if (!lockAnim) {
+			// sitting and rolling logic
+	        if (Input.GetKey(KeyCode.S))  
+	        {
+	            IsSit = true;
+	            m_Anim.Play("Sit");
 
-        m_MoveX = Input.GetAxis("Horizontal");
+	            if (Input.GetKey(KeyCode.D)){
+	            	m_Anim.Play("Roll");
+	            	IsSit = false;
+	            	dirFacing = 1;
+	            } else if (Input.GetKey(KeyCode.A)) {
+	            	m_Anim.Play("Roll");
+	            	IsSit = false;
+	            	dirFacing = -1;
+	            }
+	        }
+	        else if (Input.GetKeyUp(KeyCode.S))
+	        {
+	            m_Anim.Play("Idle");
+	            IsSit = false;
+	        }
 
-        GroundCheckUpdate();
+	         // sit나 die일때 애니메이션이 돌때는 다른 애니메이션이 되지 않게 한다. 
+	        if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Sit") || m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+	        {
+	            if (Input.GetKeyDown(KeyCode.Space))
+	            {
+	                if (currentJumpCount < JumpCount)  // 0 , 1
+	                {
+	                    DownJump();
+	                }
+	            }
+	            return;
+	        }
 
-        if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {
-            if (Input.GetKey(KeyCode.Mouse0))
-            {
-                m_Anim.Play("Attack");
-            }
-            else
-            {
-                if (m_MoveX == 0)
-                {
-                    if (!OnceJumpRayCheck)
-                        m_Anim.Play("Idle");
-                }
-                else
-                {
-                    m_Anim.Play("Run");
-                }
-            }
-        }
+	        m_MoveX = Input.GetAxis("Horizontal");
 
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            m_Anim.Play("Die");
-        }
-		
-        // 기타 이동 인풋.
+	        GroundCheckUpdate();
+
+	       
+	        if (Input.GetKey(KeyCode.Mouse0))
+	        {
+	            m_Anim.Play("Attack");
+	        }
+
+	        else
+	        {
+	            if (m_MoveX == 0)
+	            {
+	                if (!OnceJumpRayCheck)
+	                    m_Anim.Play("Idle");
+	            }
+	            else
+	            {
+	                m_Anim.Play("Run");
+	            }
+	        }
+	        
+	        // Die animation
+	        if (Input.GetKey(KeyCode.Alpha1))
+	        {
+	            m_Anim.Play("Die");
+	        }
+			
+	        //Jump trigger logic
+	        if (Input.GetKeyDown(KeyCode.Space))
+	        {
+	        	Debug.Log("Jump!");
+	            if (currentJumpCount < JumpCount)  // 0 , 1
+	            {
+	                if (!IsSit)
+	                {
+	                    performJump();
+	                }
+	                else
+	                {
+	                    DownJump();
+	                }
+	            }
+	        }
+	    }   
+
+	    // Running logic
         if (Input.GetKey(KeyCode.D))
         {
         	//if walking forward, walk in normal speed
@@ -100,14 +140,7 @@ public class Swordman : PlayerController
         	else {
         		transform.transform.Translate(new Vector3(m_MoveX * walkBackSlowDown*MoveSpeed * Time.deltaTime, 0, 0));
         	}
-
-           	if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            	// transform.localScale = new Vector3(-1, 1, 1);
-           		lockDir = true;
-           	else
-           		lockDir = false;
         }
-
         else if (Input.GetKey(KeyCode.A))
         {
 			//if walking forward, walk in normal speed
@@ -118,30 +151,6 @@ public class Swordman : PlayerController
         	else {
         		transform.transform.Translate(new Vector3(m_MoveX * walkBackSlowDown*MoveSpeed * Time.deltaTime, 0, 0));
         	}
-            
-            if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            	// transform.localScale = new Vector3(1, 1, 1);
-            	lockDir = true;
-            else 
-            	lockDir = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-                return;
-
-            if (currentJumpCount < JumpCount)  // 0 , 1
-            {
-                if (!IsSit)
-                {
-                    performJump();
-                }
-                else
-                {
-                    DownJump();
-                }
-            }
         }
     }
 
