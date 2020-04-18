@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public abstract class PlayerController :MonoBehaviour
+public abstract class PlayerController : NetworkBehaviour
 {
     public bool IsSit = false;
     public int currentJumpCount = 0; 

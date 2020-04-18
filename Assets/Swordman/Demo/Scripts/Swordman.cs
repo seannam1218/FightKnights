@@ -10,6 +10,9 @@ public class Swordman : PlayerController
 
     private void Start()
     {
+    	if(!isLocalPlayer) {
+    		return;
+    	}
         m_CapsuleCollider  = this.transform.GetComponent<CapsuleCollider2D>();
         m_Anim = this.transform.Find("model").GetComponent<Animator>();
         m_rigidbody = this.transform.GetComponent<Rigidbody2D>();
@@ -18,6 +21,10 @@ public class Swordman : PlayerController
 
     private void Update()
     {
+    	if(!isLocalPlayer) {
+    		return;
+    	}
+
     	if (!lockAnim) {
     		dirFacing = Input.mousePosition.x/Screen.width - (float)0.5;
     	}
@@ -114,7 +121,6 @@ public class Swordman : PlayerController
 	        //Jump trigger logic
 	        if (Input.GetKeyDown(KeyCode.Space))
 	        {
-	        	Debug.Log("Jump!");
 	            if (currentJumpCount < JumpCount)  // 0 , 1
 	            {
 	                if (!IsSit)

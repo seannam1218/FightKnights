@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class CameraController : MonoBehaviour {
-
+public class CameraController : NetworkBehaviour {
 
     public static CameraController Instance;
 
     public GameObject Target;
     public int smoothValue =2;
-    public float posY = (float) -0.5;
-    public Vector2 mousePos;
+    public float yOffset = (float) -0.5;
+    public Vector3 mousePos;
     public float pullValue = 10;
 
     // Use this for initialization
@@ -18,20 +18,24 @@ public class CameraController : MonoBehaviour {
 
     void Start()
     {
-     
     }
 
 
     void Update()
     {
+        if(!isLocalPlayer) {
+            return;
+        }
+
         mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10);
   
         Vector3 targetPos = new Vector3(
-            Target.transform.position.x + (mousePos.x/Screen.width - (float)0.5) * pullValue, 
-            Target.transform.position.y + posY + (mousePos.y/Screen.height - (float)0.5) * pullValue, 
-            -10);
+        Target.transform.position.x + (mousePos.x/Screen.width - (float)0.5) * pullValue, 
+        Target.transform.position.y + yOffset + (mousePos.y/Screen.height - (float)0.5) * pullValue, 
+        -10);
 
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime*smoothValue);
+        transform.position = targetPos;
+        // transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime*smoothValue);
     }
 
 
