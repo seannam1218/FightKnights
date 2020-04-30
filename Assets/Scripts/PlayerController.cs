@@ -16,6 +16,9 @@ public abstract class PlayerController : MonoBehaviour
     protected CapsuleCollider2D m_CapsuleCollider;
     protected Animator m_Anim;
 
+    [SerializeField]
+    public GameObject AttackHitBox;
+
     [Header("[Setting]")]
     public float MoveSpeed = 6;
     public int JumpCount = 2;

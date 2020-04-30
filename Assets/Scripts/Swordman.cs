@@ -6,37 +6,37 @@ public class Swordman : PlayerController
 {
 	float dirFacing;
 	bool lockAnim = false;
-	float walkBackSlowDown = (float)0.4;
+	float walkBackSlowDown = 0.4f;
+	float attackDelay = 0.2f;
+	float attackDuration = 0.1f;
+	float offsetHalfGameScreen = 0.5f;
 
     private void Start()
     {
-        m_CapsuleCollider  = this.transform.GetComponent<CapsuleCollider2D>();
+        m_CapsuleCollider  = this.GetComponent<CapsuleCollider2D>();
         m_Anim = this.transform.Find("model").GetComponent<Animator>();
         m_rigidbody = this.transform.GetComponent<Rigidbody2D>();
+        AttackHitBox.SetActive(false);
     }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
-    	if (!lockAnim) {
-    		dirFacing = Input.mousePosition.x/Screen.width - (float)0.5;
-    	}
-    	
     	//turn the player to face the right direction while rolling or attacking
+    	faceCorrectDirection();
+    	checkInput();
+    }
+
+    public void faceCorrectDirection() {
+    	if (!lockAnim) {
+    		dirFacing = Input.mousePosition.x/Screen.width - offsetHalfGameScreen;
+    	}
     	if (dirFacing > 0 && !lockAnim) {
     		transform.localScale = new Vector3(-1, 1, 1);
     	} else if (dirFacing <= 0 && !lockAnim) {
     		transform.localScale = new Vector3(1, 1, 1);
     	}
-
-    	checkInput();
-
-        if (m_rigidbody.velocity.magnitude > 30)
-        {
-            m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x - 0.1f, m_rigidbody.velocity.y - 0.1f);
-        }
     }
-
 
     public void checkInput()
     {	
@@ -90,6 +90,7 @@ public class Swordman : PlayerController
 	        if (Input.GetKey(KeyCode.Mouse0))
 	        {
 	            m_Anim.Play("Attack");
+	            StartCoroutine(DoAttack());
 	        }
 
 	        else
@@ -152,6 +153,14 @@ public class Swordman : PlayerController
         	}
         }
     }
+
+    IEnumerator DoAttack() {
+    	yield return new WaitForSeconds(attackDelay);
+    	AttackHitBox.SetActive(true);
+    	yield return new WaitForSeconds(attackDuration);
+    	AttackHitBox.SetActive(false);
+    }
+
 
     protected override void LandingEvent()
     {
