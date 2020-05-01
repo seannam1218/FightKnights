@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+
 
 public class Swordman : PlayerController
 {
@@ -13,6 +15,11 @@ public class Swordman : PlayerController
 
     private void Start()
     {
+    	if (photonView.IsMine) {
+            camera.SetActive(true);
+            crosshair.SetActive(true);
+        }
+
         m_CapsuleCollider  = this.GetComponent<CapsuleCollider2D>();
         m_Anim = this.transform.Find("model").GetComponent<Animator>();
         m_rigidbody = this.transform.GetComponent<Rigidbody2D>();
@@ -22,6 +29,9 @@ public class Swordman : PlayerController
 
     private void FixedUpdate()
     {
+       	if (!photonView.IsMine) {
+            return;
+        }
     	//turn the player to face the right direction while rolling or attacking
     	faceCorrectDirection();
     	checkInput();

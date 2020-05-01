@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public abstract class PlayerController : MonoBehaviour
+
+public abstract class PlayerController : MonoBehaviourPunCallbacks
 {
     public bool IsSit = false;
     public int currentJumpCount = 0; 
@@ -19,6 +21,9 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField]
     public GameObject AttackHitBox;
 
+    public GameObject camera;
+    public GameObject crosshair;
+
     [Header("[Setting]")]
     public float MoveSpeed = 6;
     public int JumpCount = 2;
@@ -26,6 +31,10 @@ public abstract class PlayerController : MonoBehaviour
 
     protected void AnimUpdate()
     {
+        if (!photonView.IsMine) {
+            return;
+        }
+
         if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && !m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Roll"))
         {
             if (Input.GetKey(KeyCode.Mouse0))
