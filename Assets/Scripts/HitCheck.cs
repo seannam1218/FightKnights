@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
+// using Photon.Pun;
 
-public class HitCheck : MonoBehaviourPunCallbacks
+// public class HitCheck : MonoBehaviourPunCallbacks
+public class HitCheck : MonoBehaviour
+
 {
 	// [SerializeField]
 	// private GameObject ObjectGettingHit;
@@ -24,11 +26,11 @@ public class HitCheck : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter2D(Collider2D collider) {
         //TODO: something wrong here! 
-         if (!photonView.IsMine) {
-            return;
-        }
-
-    	if (collider.gameObject.tag == "AttackHitBox" && collider.gameObject.tag != "Player") {
+        //  if (!photonView.IsMine) {
+        //     return;
+        // }
+        // Debug.Log("triggered....");	
+    	if (collider.gameObject.tag == "AttackHitBox" && collider.gameObject != this.gameObject) {
     		Debug.Log("tag OUCH!");
     	}
     }

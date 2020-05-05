@@ -4,47 +4,29 @@ using UnityEngine;
 
 public class GroundSensor : MonoBehaviour {
 
-    public PlayerController m_root;
+	public MasterController m_root;
 
-    // Use this for initialization
-    void Start()
-    {
-        m_root = this.transform.root.GetComponent<PlayerController>();
-       
-    }
+	void Start()
+	{
+		m_root = this.transform.root.GetComponent<MasterController>();
+	}
 
- 
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("Ground") || other.CompareTag("Block") || other.CompareTag("Player")) {
+			m_root.isGrounded = true;
+			if (!m_root.CheckIsAnimActive("Attack") && !m_root.CheckIsAnimActive("Roll")) {
+				m_root.playerAnim.Play("Idle");
+			}
+		}
+	}
 
-    ContactPoint2D[] contacts = new ContactPoint2D[1];
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Ground") || other.CompareTag("Block"))
-        {
-            if (other.CompareTag("Ground"))
-            {
-                m_root.Is_DownJump_GroundCheck = true;
-            }
-            else
-            {
-                m_root.Is_DownJump_GroundCheck = false;
-            }
-
-            if (m_root.m_rigidbody.velocity.y <= 0)
-            {
-                m_root.isGrounded = true;
-                m_root.currentJumpCount = 0;
-            }
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-
-        m_root.isGrounded = false;
-     
-    }
-
-
+	void OnTriggerExit2D(Collider2D other)
+	{
+		m_root.isGrounded = false;
+		if (!m_root.CheckIsAnimActive("Attack") && !m_root.CheckIsAnimActive("Roll")) {
+			m_root.playerAnim.Play("Jump");
+		}
+	}
 
 }

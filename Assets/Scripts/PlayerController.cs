@@ -61,14 +61,7 @@ public abstract class PlayerController : MonoBehaviourPunCallbacks
     {
         m_Anim.Play("Jump");
 
-        m_rigidbody.velocity = new Vector2(0, 0);
 
-        m_rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-
-        OnceJumpRayCheck = true;
-        isGrounded = false;
-
-        currentJumpCount++;
     }
 
     protected void DownJump()
