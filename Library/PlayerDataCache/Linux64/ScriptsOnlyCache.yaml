@@ -6,8 +6,8 @@ ScriptsOnlyBuild:
     - GroundSensor
     - HitCheck
     - Launcher
+    - MasterController
     - SpawnManager
-    - Swordman
     PhotonUnityNetworking.Editor.dll:
     - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
@@ -49,6 +49,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
+    - Class: 62
+      Script: {instanceID: 0}
     - Class: 70
       Script: {instanceID: 0}
     - Class: 74
@@ -64,21 +66,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11508}
     - Class: 114
-      Script: {instanceID: 11546}
+      Script: {instanceID: 11952}
     - Class: 114
-      Script: {instanceID: 11954}
+      Script: {instanceID: 11956}
     - Class: 114
-      Script: {instanceID: 11958}
+      Script: {instanceID: 12116}
     - Class: 114
-      Script: {instanceID: 12118}
+      Script: {instanceID: 12148}
     - Class: 114
-      Script: {instanceID: 12150}
+      Script: {instanceID: 12446}
     - Class: 114
-      Script: {instanceID: 12448}
+      Script: {instanceID: 12600}
     - Class: 114
-      Script: {instanceID: 12936}
+      Script: {instanceID: 12934}
     - Class: 114
-      Script: {instanceID: 12944}
+      Script: {instanceID: 12942}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -111,9 +113,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 570}
     - Class: 114
-      Script: {instanceID: 11788}
+      Script: {instanceID: 11786}
     - Class: 114
-      Script: {instanceID: 11958}
+      Script: {instanceID: 11956}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -371,12 +373,6 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.dll
     namespaceName: Photon.Pun
     className: PhotonRigidbody2DView
-  - hash:
-      serializedVersion: 2
-      Hash: dbaf98b762b1c6807182c3de607865e7
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Swordman
   - hash:
       serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
@@ -709,6 +705,12 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
+      Hash: b3fbfc1e74e0575e5117b04170a0142d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MasterController
+  - hash:
+      serializedVersion: 2
       Hash: 88cc9df3c6fc697bfbeacd24c0d6f2d7
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
@@ -805,7 +807,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: fabc1d351bc4753fd515f80f7306702c
+      Hash: d685c4aee7c7ac96bc7266f6867c7702
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GroundSensor

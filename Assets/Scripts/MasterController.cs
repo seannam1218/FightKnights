@@ -9,18 +9,21 @@ public class MasterController : MonoBehaviourPunCallbacks
 	public Animator playerAnim;
 	private Rigidbody2D playerRigidbody;
 	private CapsuleCollider2D playerCapsuleCollider;
+	public GameObject weaponHitbox;
 	public GameObject camera;
 	public GameObject crosshair;
-	public GameObject AttackHitBox;
-
 
 	private float playerMoveX;
 	private float savedPlayerVelocity;
 	public bool isGrounded;
+	public bool isRolling;
 	private float dirFacing; 
+
 	private static float offsetHalfGameScreen = 0.5f;
 	private static float attackDelay = 0.2f;
-	private static float attackDuration = 0.1f;
+	private static float attackDuration = 0.3f;
+	private static float rollDelay = 0.2f;
+	private static float rollDuration = 0.1f;
 
 	[Header("[Setting]")]
 	public float moveSpeed;
@@ -30,23 +33,33 @@ public class MasterController : MonoBehaviourPunCallbacks
 
 	void Start()
 	{
-		playerCapsuleCollider  = this.GetComponent<CapsuleCollider2D>();
-		playerAnim = this.transform.GetComponent<Animator>();
-		playerRigidbody = this.transform.GetComponent<Rigidbody2D>();
+		// if (photonView.IsMine) {
+			playerCapsuleCollider  = this.GetComponent<CapsuleCollider2D>();
+			playerAnim = this.GetComponent<Animator>();
+			playerRigidbody = this.GetComponent<Rigidbody2D>();
+		// }
 
 		if (photonView.IsMine) {
 			camera.SetActive(true);
 			crosshair.SetActive(true);
-		}
+		}	
 	}
 
 
 	// Update is called once per frame
 	void Update()
 	{
-		FaceCorrectDirection();
-		AnimUpdate();
-		MovementUpdate();
+		if (photonView.IsMine) {
+			AnimUpdate();
+		}
+	}
+
+	void FixedUpdate() 
+	{
+		if (photonView.IsMine) {
+			FaceCorrectDirection();
+			MovementUpdate();
+		}
 	}
 
 	public void FaceCorrectDirection() {
@@ -96,7 +109,7 @@ public class MasterController : MonoBehaviourPunCallbacks
 
 	void MovementUpdate() 
 	{
-		if (CheckIsAnimActive("Attack") || CheckIsAnimActive("Roll")) {
+		if (CheckIsAnimActive("Roll")) {
 			if (playerMoveX == 0) {
 				savedPlayerVelocity = 0;
 			}
@@ -104,14 +117,14 @@ public class MasterController : MonoBehaviourPunCallbacks
 			return;
 		}
 		if (Input.GetKeyDown(KeyCode.Mouse0)) {
-			ActivateAttackBox();
+			StartCoroutine(ActivateAttackBox());
 		}
 		if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
-			DeactivateCollider(); //make the collider temporarily transparent to other players' colliders
+			StartCoroutine(DeactivateCollider()); //make the collider temporarily transparent to other players' colliders
 		}
 
 		//jump
-		if (isGrounded && Input.GetKeyDown(KeyCode.Space)) {
+		if (isGrounded && !CheckIsAnimActive("Attack") && Input.GetKeyDown(KeyCode.Space)) {
 			playerRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 		}
 
@@ -128,14 +141,17 @@ public class MasterController : MonoBehaviourPunCallbacks
 
 	IEnumerator ActivateAttackBox() {
 		yield return new WaitForSeconds(attackDelay);
-		AttackHitBox.SetActive(true);
+		weaponHitbox.SetActive(true);
 		yield return new WaitForSeconds(attackDuration);
-		AttackHitBox.SetActive(false);
+		weaponHitbox.SetActive(false);
 	}
 
+	//TODO: implement this function!
 	IEnumerator DeactivateCollider() {
-		yield return new WaitForSeconds(attackDelay);
-
+		yield return new WaitForSeconds(rollDelay);
+		isRolling = true;
+		yield return new WaitForSeconds(rollDuration);
+		isRolling = false;
 	}
 
 	void HandleMoveRight() {

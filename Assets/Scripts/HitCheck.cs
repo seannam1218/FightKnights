@@ -1,38 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// using Photon.Pun;
+
 
 // public class HitCheck : MonoBehaviourPunCallbacks
+
 public class HitCheck : MonoBehaviour
-
 {
-	// [SerializeField]
-	// private GameObject ObjectGettingHit;
+	// Update is called once per frame
+	void Update()
+	{
+	}
 
-	// private GameObject Collider;
+	private void OnTriggerStay2D(Collider2D collider) {
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Collider = ObjectGettingHit.CapsuleCollider2D;
-    }
+		// if (isRolling == true) {
+		// 	Debug.Log("collision is ignored!");	
+		// 	Physics.IgnoreCollision((Collider2D)collider, ObjectCollidingWithPlayer.GetComponent<Collider2D>());
+		// }
+	
+		if (collider.gameObject.tag == "AttackHitBox" && collider.gameObject.tag != "LocalPlayer") {
+			Debug.Log("tag OUCH!");
+		}
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Debug.Log(Weapon.SpriteRenderer.color);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collider) {
-        //TODO: something wrong here! 
-        //  if (!photonView.IsMine) {
-        //     return;
-        // }
-        // Debug.Log("triggered....");	
-    	if (collider.gameObject.tag == "AttackHitBox" && collider.gameObject != this.gameObject) {
-    		Debug.Log("tag OUCH!");
-    	}
-    }
 }
 

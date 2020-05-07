@@ -20,7 +20,7 @@ TagManager:
   - Background
   - Platforms
   - LocalPlayer
-  - 
+  - Weapon
   - 
   - 
   - 
@@ -52,4 +52,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1182626645
+    locked: 0
+  - name: Weapon
+    uniqueID: 2036571191
+    locked: 0
+  - name: UI
+    uniqueID: 3973656815
     locked: 0

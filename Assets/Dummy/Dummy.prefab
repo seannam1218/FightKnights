@@ -574,3 +574,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3458c720fcca0128b2096cf760399a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnim: {fileID: 0}
+  playerAttackHitBox: {fileID: 0}
+  camera: {fileID: 0}
+  crosshair: {fileID: 0}
+  isGrounded: 0
+  isRolling: 0
+  isAttacking: 0
+  moveSpeed: 0
+  walkBackSlowDownFactor: 0
+  jumpForce: 0
