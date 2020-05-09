@@ -38,9 +38,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 966
+    x: 853
     y: 0
-    width: 563
+    width: 676
     height: 415
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_MinSize: {x: 333, y: 271}
   m_MaxSize: {x: 14003, y: 10021}
   vertical: 0
-  controlID: 64
+  controlID: 127
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 678, y: 492}
   m_MaxSize: {x: 18003, y: 14042}
   vertical: 0
-  controlID: 38
+  controlID: 57
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 14003, y: 14042}
   vertical: 1
-  controlID: 39
+  controlID: 33
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 40
+  controlID: 34
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -288,7 +288,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 966
+    width: 853
     height: 415
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
@@ -434,9 +434,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 88010000
       m_LastClickedID: 0
-      m_ExpandedIDs: 2ac1000036c1000038c1000052c100005cc10000
+      m_ExpandedIDs: 1a2fffff762fffffa642ffff9046ffff9e46ffffa046ffff3050ffff089dfffff8abffffe2adfffff8adffff38afffffaccbffffcccbffff2ecdffff36cdffff4cd0ffffd8d1ffff7efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -496,9 +496,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.5143596, y: -2.3137126, z: -1.0592749}
+    m_Target: {x: 0.9911542, y: -1.2826582, z: -0.85952556}
     speed: 2
-    m_Value: {x: 0.5143596, y: -2.3137126, z: -1.0592749}
+    m_Value: {x: 0.9911542, y: -1.2826582, z: -0.85952556}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_SceneViewState:
     showFog: 1
     showMaterialUpdate: 0
-    showSkybox: 0
+    showSkybox: 1
     showFlares: 1
     showImageEffects: 1
     showParticleSystems: 1
@@ -532,9 +532,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 8.759718
+    m_Target: 8.558281
     speed: 2
-    m_Value: 8.759718
+    m_Value: 8.558281
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -673,7 +673,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1366
     y: 645
-    width: 965
+    width: 852
     height: 394
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
@@ -689,34 +689,34 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 50
   m_LastFolders:
-  - Assets/Resources
+  - Assets/Scenes
   m_LastFoldersGridSize: 50
   m_LastProjectPath: /home/sean/GameProjects/FightKnights
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 403a0000
-    m_LastClickedID: 14912
+    m_SelectedIDs: ca340000
+    m_LastClickedID: 13514
     m_ExpandedIDs: 000000006434000066340000683400006a3400006c34000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Physics
-      m_OriginalName: Physics
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 14122
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 12}
     m_SearchString: 
@@ -774,7 +774,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 12}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -807,9 +807,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 2332
+    x: 2219
     y: 645
-    width: 561
+    width: 674
     height: 394
   m_ViewDataDictionary: {fileID: 0}
 --- !u!114 &21
@@ -835,12 +835,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1366
     y: 645
-    width: 965
+    width: 852
     height: 394
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 49000
+  m_LastSelectedObjectID: 27412
 --- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52

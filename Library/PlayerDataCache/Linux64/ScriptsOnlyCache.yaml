@@ -45,8 +45,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 50
       Script: {instanceID: 0}
-    - Class: 58
-      Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
     - Class: 62
@@ -537,7 +535,7 @@ ScriptsOnlyBuild:
     className: PhotonTransformView
   - hash:
       serializedVersion: 2
-      Hash: 0f636d1a058db8f39dcaf22fda41b09d
+      Hash: a20694958d0b7bd511c197eb5b702b84
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: HurtCheck
@@ -711,7 +709,7 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
-      Hash: b3fbfc1e74e0575e5117b04170a0142d
+      Hash: cc438f4933054d785f5a9341e219d1fc
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MasterController
@@ -813,7 +811,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: d685c4aee7c7ac96bc7266f6867c7702
+      Hash: 2d5fcf800d452aa73a878dcac102e854
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GroundSensor

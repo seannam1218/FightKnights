@@ -30,6 +30,7 @@ public class MasterController : MonoBehaviourPunCallbacks
 	public float moveSpeed;
 	public float walkBackSlowDownFactor;
 	public float jumpForce;
+	public float rollSpeedMultiplier;
 
 
 	void Start()
@@ -38,67 +39,70 @@ public class MasterController : MonoBehaviourPunCallbacks
 		playerAnim = this.GetComponent<Animator>();
 		playerRigidbody = this.GetComponent<Rigidbody2D>();
 		weaponCollider = GameObject.Find("WeaponCollider");
+		weaponCollider.SetActive(false);
 
 		if (photonView.IsMine) {
 			camera.SetActive(true);
 			crosshair.SetActive(true);
-			weaponCollider.SetActive(false);
 		}	
 	}
-
-
-	// // Update is called once per frame
-	// void Update()
-	// {
-	// 	if (photonView.IsMine) {
-			
-	// 	}
-	// }
 
 	void Update() 
 	{
 		if (photonView.IsMine) {
-			FaceCorrectDirection();
+			photonView.RPC("FaceCorrectDirection", RpcTarget.All);
 			AnimUpdate();
-			MovementUpdate();
+			photonView.RPC("MovementUpdate", RpcTarget.All);
 		}
 	}
 
+	[PunRPC]
 	public void FaceCorrectDirection() {
-		if (CheckIsAnimActive("Attack") || CheckIsAnimActive("Roll")) {
-			return;
-		}
-		dirFacing = Input.mousePosition.x/Screen.width - offsetHalfGameScreen;
-		if (dirFacing > 0) {
-			transform.localScale = new Vector3(-1, 1, 1);
-		} else if (dirFacing <= 0) {
-			transform.localScale = new Vector3(1, 1, 1);
+		if (photonView.IsMine) {
+			if (CheckIsAnimActive("Attack") || CheckIsAnimActive("Roll")) {
+				return;
+			}
+			dirFacing = Input.mousePosition.x/Screen.width - offsetHalfGameScreen;
+			if (dirFacing > 0) {
+				transform.localScale = new Vector3(-1, 1, 1);
+			} else if (dirFacing <= 0) {
+				transform.localScale = new Vector3(1, 1, 1);
+			}
 		}
 	}
 
 	void AnimUpdate() {
-		if (CheckIsAnimActive("Attack") || CheckIsAnimActive("Roll")) {
-			return;
-		}
-		if (Input.GetKey(KeyCode.Mouse0)) {
-			playerAnim.Play("Attack");
-		}
-		if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
-			playerAnim.Play("Roll");
-		}
+		if (photonView.IsMine) {
+			if (CheckIsAnimActive("Attack") || CheckIsAnimActive("Roll")) {
+				return;
+			}
+			if (Input.GetKey(KeyCode.Mouse0)) {
+				photonView.RPC("playAnim", RpcTarget.All, "Attack");
 
-		if (CheckIsAnimActive("Jump")) {
-			return;
+			}
+			if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
+				photonView.RPC("playAnim", RpcTarget.All, "Roll");
+
+			}
+
+			if (CheckIsAnimActive("Jump")) {
+				return;
+			}
+			
+			//Idle & run animation
+			playerMoveX = Input.GetAxis("Horizontal");
+			if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) {
+				photonView.RPC("playAnim", RpcTarget.All, "Run");
+			}
+			if (playerMoveX == 0) {
+				photonView.RPC("playAnim", RpcTarget.All, "Idle");
+			}
 		}
-		
-		//Idle & run animation
-		playerMoveX = Input.GetAxis("Horizontal");
-		if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) {
-			playerAnim.Play("Run");
-		}
-		if (playerMoveX == 0) {
-			playerAnim.Play("Idle");
-		}
+	}
+
+	[PunRPC]
+	public void playAnim(string action) {
+		playerAnim.Play(action);
 	}
 
 	public bool CheckIsAnimActive(string action) {
@@ -109,39 +113,42 @@ public class MasterController : MonoBehaviourPunCallbacks
 		}
 	}
 
+	[PunRPC]
 	void MovementUpdate() 
 	{
-		if (CheckIsAnimActive("Roll")) {
-			if (playerMoveX == 0) {
-				savedPlayerVelocity = 0;
+		if (photonView.IsMine) {
+			if (CheckIsAnimActive("Roll")) {
+				if (playerMoveX == 0) {
+					savedPlayerVelocity = 0;
+				}
+				transform.transform.Translate(new Vector3(savedPlayerVelocity * rollSpeedMultiplier * Time.deltaTime, 0, 0));
+				return;
 			}
-			transform.transform.Translate(new Vector3(savedPlayerVelocity * Time.deltaTime, 0, 0));
-			return;
-		}
 
-		playerMoveX = Input.GetAxis("Horizontal");
-		//Run right
-		if (Input.GetKey(KeyCode.D)) {
-			HandleMoveRight();
-		}
-		//Run left
-		else if (Input.GetKey(KeyCode.A)) {
-			HandleMoveLeft();
-		}
+			playerMoveX = Input.GetAxis("Horizontal");
+			//Run right
+			if (Input.GetKey(KeyCode.D)) {
+				HandleMoveRight();
+			}
+			//Run left
+			else if (Input.GetKey(KeyCode.A)) {
+				HandleMoveLeft();
+			}
 
-		if (CheckIsAnimActive("Attack")) {
-			return; 
-		}
+			if (CheckIsAnimActive("Attack")) {
+				return; 
+			}
 
-		if (Input.GetKey(KeyCode.Mouse0)) {
-			StartCoroutine(ActivateHitBox());
-		}
-		if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
-			StartCoroutine(DeactivateCollider()); //make the collider temporarily transparent to other players' colliders
-		}
-		//jump
-		if (isGrounded && Input.GetKeyDown(KeyCode.Space)) {
-			playerRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+			if (Input.GetKey(KeyCode.Mouse0)) {
+				StartCoroutine(ActivateHitBox());
+			}
+			if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
+				StartCoroutine(DeactivateCollider()); //make the collider temporarily transparent to other players' colliders
+			}
+			//jump
+			if (isGrounded && Input.GetKeyDown(KeyCode.Space)) {
+				playerRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+			}
 		}
 	}
 

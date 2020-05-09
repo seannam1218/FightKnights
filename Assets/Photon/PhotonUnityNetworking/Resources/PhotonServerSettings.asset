@@ -25,8 +25,8 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
-  PunLogging: 2
+  DevRegion: usw
+  PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
@@ -36,6 +36,17 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - FaceCorrectDirection
+  - AnimUpdate
+  - OnTriggerEnter2D
+  - Bleed
+  - CheckIsAnimActive
+  - MovementUpdate
+  - handleTriggerEnter
+  - handleTriggerExit
+  - OnTriggerExit2D
+  - playAttackAnim
+  - playAnim
   DisableAutoOpenWizard: 1
   ShowSettings: 0
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1
