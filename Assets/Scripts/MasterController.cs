@@ -37,6 +37,7 @@ public class MasterController : MonoBehaviourPunCallbacks
 			playerCapsuleCollider  = this.GetComponent<CapsuleCollider2D>();
 			playerAnim = this.GetComponent<Animator>();
 			playerRigidbody = this.GetComponent<Rigidbody2D>();
+			weaponHitbox.SetActive(false);
 		// }
 
 		if (photonView.IsMine) {
@@ -117,7 +118,9 @@ public class MasterController : MonoBehaviourPunCallbacks
 			return;
 		}
 		if (Input.GetKeyDown(KeyCode.Mouse0)) {
-			StartCoroutine(ActivateAttackBox());
+			if (!CheckIsAnimActive("Attack")) {
+				StartCoroutine(ActivateAttackBox());
+			}
 		}
 		if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
 			StartCoroutine(DeactivateCollider()); //make the collider temporarily transparent to other players' colliders

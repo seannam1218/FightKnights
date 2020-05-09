@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class HitCheck : MonoBehaviour
 {
+
+	public Transform BloodParticleEffect;
 	// Update is called once per frame
 	void Update()
 	{
@@ -20,7 +22,7 @@ public class HitCheck : MonoBehaviour
 		// }
 	
 		if (collider.gameObject.tag == "AttackHitBox" && collider.gameObject.tag != "LocalPlayer") {
-			Debug.Log("tag OUCH!");
+			BloodParticleEffect.GetComponent<ParticleSystem>().Play();
 		}
 	}
 
