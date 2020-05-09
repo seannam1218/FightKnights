@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Ground
   - Block
-  - AttackHitBox
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -21,7 +21,7 @@ TagManager:
   - Platforms
   - LocalPlayer
   - Weapon
-  - 
+  - PlayerBack
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: Platforms
     uniqueID: 866959501
+    locked: 0
+  - name: PlayerBack
+    uniqueID: 3799766267
     locked: 0
   - name: Player
     uniqueID: 1182626645

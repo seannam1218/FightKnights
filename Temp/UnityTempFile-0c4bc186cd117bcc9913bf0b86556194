@@ -328,7 +328,7 @@
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/CrosshairController.cs"
 "Assets/Scripts/GroundSensor.cs"
-"Assets/Scripts/HitCheck.cs"
+"Assets/Scripts/HurtCheck.cs"
 "Assets/Scripts/Launcher.cs"
 "Assets/Scripts/MasterController.cs"
 "Assets/Scripts/SpawnManager.cs"
