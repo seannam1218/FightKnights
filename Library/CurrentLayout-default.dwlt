@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 4}
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_MinSize: {x: 333, y: 271}
   m_MaxSize: {x: 14003, y: 10021}
   vertical: 0
-  controlID: 127
+  controlID: 107
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -162,10 +162,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 978
-  m_MinSize: {x: 678, y: 492}
+  m_MinSize: {x: 677, y: 492}
   m_MaxSize: {x: 18003, y: 14042}
   vertical: 0
-  controlID: 57
+  controlID: 33
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -187,10 +187,10 @@ MonoBehaviour:
     y: 0
     width: 1529
     height: 978
-  m_MinSize: {x: 403, y: 492}
+  m_MinSize: {x: 402, y: 492}
   m_MaxSize: {x: 14003, y: 14042}
   vertical: 1
-  controlID: 33
+  controlID: 82
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -212,10 +212,10 @@ MonoBehaviour:
     y: 0
     width: 1529
     height: 563
-  m_MinSize: {x: 403, y: 221}
-  m_MaxSize: {x: 8003, y: 4021}
+  m_MinSize: {x: 402, y: 221}
+  m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 34
+  controlID: 83
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -434,9 +434,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 88010000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 1a2fffff762fffffa642ffff9046ffff9e46ffffa046ffff3050ffff089dfffff8abffffe2adfffff8adffff38afffffaccbffffcccbffff2ecdffff36cdffff4cd0ffffd8d1ffff7efbffff
+      m_SelectedIDs: 844e0000
+      m_LastClickedID: 20100
+      m_ExpandedIDs: 34beffff784e0000844e0000864e0000a04e0000aa4e0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -496,9 +496,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.9911542, y: -1.2826582, z: -0.85952556}
+    m_Target: {x: 0.8208031, y: 0.39120337, z: -1.4288641}
     speed: 2
-    m_Value: {x: 0.9911542, y: -1.2826582, z: -0.85952556}
+    m_Value: {x: 0.8208031, y: 0.39120337, z: -1.4288641}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_SceneViewState:
     showFog: 1
     showMaterialUpdate: 0
-    showSkybox: 1
+    showSkybox: 0
     showFlares: 1
     showImageEffects: 1
     showParticleSystems: 1
@@ -532,9 +532,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 8.558281
+    m_Target: 6.6049466
     speed: 2
-    m_Value: 8.558281
+    m_Value: 6.6049466
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -689,20 +689,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 50
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts
   m_LastFoldersGridSize: 50
   m_LastProjectPath: /home/sean/GameProjects/FightKnights
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ca340000
-    m_LastClickedID: 13514
-    m_ExpandedIDs: 000000006434000066340000683400006a3400006c34000000ca9a3b
+    m_SelectedIDs: 82340000
+    m_LastClickedID: 13442
+    m_ExpandedIDs: 000000007c3400007e34000080340000823400008434000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -730,7 +730,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006434000066340000683400006a3400006c340000
+    m_ExpandedIDs: 000000007c3400007e340000803400008234000084340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -840,7 +840,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 27412
+  m_LastSelectedObjectID: 19100
 --- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52

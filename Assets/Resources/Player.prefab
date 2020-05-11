@@ -246,7 +246,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6202147730235110431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52d4705c94b64c208981d14f07fa7328, type: 3}
+  m_Script: {fileID: 11500000, guid: 4099677e0ae945c589c9761f0fe2ffac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnim: {fileID: 0}
@@ -254,12 +254,15 @@ MonoBehaviour:
   weaponCollider: {fileID: 0}
   camera: {fileID: 7201626437685942729}
   crosshair: {fileID: 8876149076863093914}
+  BloodParticleEffect: {fileID: 5597519196527799178}
   isGrounded: 0
   isRolling: 0
+  isJumping: 0
   moveSpeed: 7
   walkBackSlowDownFactor: 0.5
-  jumpForce: 19
-  rollSpeedMultiplier: 1.2
+  initialJumpForce: 11
+  additionalJumpForce: 0.5
+  rollSpeedMultiplier: 1.1
 --- !u!114 &7885705655659374024
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -47,6 +47,14 @@ MonoBehaviour:
   - OnTriggerExit2D
   - playAttackAnim
   - playAnim
+  - AddJumpForce
+  - HandleMoveLeft
+  - HandleMoveRight
+  - HandleRoll
+  - SwitchLayerTo
+  - ToggleIsGrounded
+  - WeaponColliderSetActive
+  - IsJumpingSetBoolean
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -13,11 +13,13 @@ public class MasterController : MonoBehaviourPunCallbacks
 	public GameObject weaponCollider;
 	public GameObject camera;
 	public GameObject crosshair;
+	public Transform BloodParticleEffect;
 
 	private float playerMoveX;
 	private float savedPlayerVelocity;
 	public bool isGrounded;
 	public bool isRolling;
+	public bool isJumping;
 	private float dirFacing; 
 
 	private static float offsetHalfGameScreen = 0.5f;
@@ -25,13 +27,21 @@ public class MasterController : MonoBehaviourPunCallbacks
 	private static float attackDuration = 0.2f;
 	private static float rollDelay = 0.1f;
 	private static float rollDuration = 0.3f;
+	private static float jumpAdditionWindow = 0.3f;
 
 	[Header("[Setting]")]
 	public float moveSpeed;
 	public float walkBackSlowDownFactor;
-	public float jumpForce;
+	public float initialJumpForce;
+	public float additionalJumpForce;
+	
 	public float rollSpeedMultiplier;
 
+	//Layers
+	private int PLAYER = 8;
+	private int LOCALPLAYER = 11;
+	private int WEAPON = 12;
+	private int PLAYERBACK = 13;
 
 	void Start()
 	{
@@ -39,11 +49,18 @@ public class MasterController : MonoBehaviourPunCallbacks
 		playerAnim = this.GetComponent<Animator>();
 		playerRigidbody = this.GetComponent<Rigidbody2D>();
 		weaponCollider = GameObject.Find("WeaponCollider");
-		weaponCollider.SetActive(false);
 
 		if (photonView.IsMine) {
 			camera.SetActive(true);
 			crosshair.SetActive(true);
+			photonView.RPC("WeaponColliderSetActive", RpcTarget.All, false);
+
+			SwitchLayerTo(LOCALPLAYER);
+			Transform[] allChildren = GetComponentsInChildren<Transform>();
+			foreach (Transform child in allChildren)
+			{
+				child.gameObject.layer = LOCALPLAYER;
+			}
 		}	
 	}
 
@@ -52,7 +69,8 @@ public class MasterController : MonoBehaviourPunCallbacks
 		if (photonView.IsMine) {
 			photonView.RPC("FaceCorrectDirection", RpcTarget.All);
 			AnimUpdate();
-			photonView.RPC("MovementUpdate", RpcTarget.All);
+			// photonView.RPC("MovementUpdate", RpcTarget.All);
+			MovementUpdate();
 		}
 	}
 
@@ -82,7 +100,6 @@ public class MasterController : MonoBehaviourPunCallbacks
 			}
 			if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
 				photonView.RPC("playAnim", RpcTarget.All, "Roll");
-
 			}
 
 			if (CheckIsAnimActive("Jump")) {
@@ -113,26 +130,22 @@ public class MasterController : MonoBehaviourPunCallbacks
 		}
 	}
 
-	[PunRPC]
 	void MovementUpdate() 
 	{
 		if (photonView.IsMine) {
 			if (CheckIsAnimActive("Roll")) {
-				if (playerMoveX == 0) {
-					savedPlayerVelocity = 0;
-				}
-				transform.transform.Translate(new Vector3(savedPlayerVelocity * rollSpeedMultiplier * Time.deltaTime, 0, 0));
+				photonView.RPC("HandleRoll", RpcTarget.All);
 				return;
 			}
 
 			playerMoveX = Input.GetAxis("Horizontal");
 			//Run right
 			if (Input.GetKey(KeyCode.D)) {
-				HandleMoveRight();
+				photonView.RPC("HandleMoveRight", RpcTarget.All);
 			}
 			//Run left
 			else if (Input.GetKey(KeyCode.A)) {
-				HandleMoveLeft();
+				photonView.RPC("HandleMoveLeft", RpcTarget.All);
 			}
 
 			if (CheckIsAnimActive("Attack")) {
@@ -143,30 +156,53 @@ public class MasterController : MonoBehaviourPunCallbacks
 				StartCoroutine(ActivateHitBox());
 			}
 			if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
-				StartCoroutine(DeactivateCollider()); //make the collider temporarily transparent to other players' colliders
+				StartCoroutine(NegateCollider()); //make the collider temporarily transparent to other players' colliders
 			}
 			//jump
 			if (isGrounded && Input.GetKeyDown(KeyCode.Space)) {
-				playerRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+				photonView.RPC("AddJumpForce", RpcTarget.All, initialJumpForce);	
+				StartCoroutine(ToggleIsJumping());
+			}
+			if (isJumping && Input.GetKey(KeyCode.Space)) {
+				photonView.RPC("AddJumpForce", RpcTarget.All, additionalJumpForce);	
 			}
 		}
 	}
 
 	IEnumerator ActivateHitBox() {
 		yield return new WaitForSeconds(attackDelay);
-		weaponCollider.SetActive(true);
+		photonView.RPC("WeaponColliderSetActive", RpcTarget.All, true);
 		yield return new WaitForSeconds(attackDuration);
-		weaponCollider.SetActive(false);
+		photonView.RPC("WeaponColliderSetActive", RpcTarget.All, false);
 	}
 
-	//TODO: implement this function!
-	IEnumerator DeactivateCollider() {
+	[PunRPC]
+	void WeaponColliderSetActive(Boolean val) {
+		weaponCollider.SetActive(val);
+	}
+
+	IEnumerator NegateCollider() {
 		yield return new WaitForSeconds(rollDelay);
-		gameObject.layer = 13;
+		photonView.RPC("SwitchLayerTo", RpcTarget.All, 13);
 		yield return new WaitForSeconds(rollDuration);
-		gameObject.layer = 11;
+		photonView.RPC("SwitchLayerTo", RpcTarget.All, 11);
 	}
 
+	[PunRPC]
+	void SwitchLayerTo(int i) {
+		Debug.Log("switching to layer " + i);
+		gameObject.layer = i;
+	}
+
+	[PunRPC]
+	void HandleRoll() {
+		if (playerMoveX == 0) {
+			savedPlayerVelocity = 0;
+		}
+		transform.transform.Translate(new Vector3(savedPlayerVelocity * rollSpeedMultiplier * Time.deltaTime, 0, 0));
+	}
+
+	[PunRPC]
 	void HandleMoveRight() {
 		//if walking forward, walk in normal speed
 		if (dirFacing >= 0) {
@@ -180,6 +216,7 @@ public class MasterController : MonoBehaviourPunCallbacks
 		}
 	}
 
+	[PunRPC]
 	void HandleMoveLeft() {
 		//if walking forward, walk in normal speed
 		if (dirFacing < 0) {
@@ -193,5 +230,32 @@ public class MasterController : MonoBehaviourPunCallbacks
 		}
 	}
 
+	IEnumerator ToggleIsJumping() {
+		photonView.RPC("IsJumpingSetBoolean", RpcTarget.All, true);
+		yield return new WaitForSeconds(jumpAdditionWindow);
+		photonView.RPC("IsJumpingSetBoolean", RpcTarget.All, false);
+	}
+
+	[PunRPC]
+	void IsJumpingSetBoolean(Boolean val) {
+		isJumping = val;
+	}
+
+
+	[PunRPC]
+	void AddJumpForce(float force) {
+		playerRigidbody.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+	}
+
+	[PunRPC]
+	public void ToggleIsGrounded() {
+		BloodParticleEffect.GetComponent<ParticleSystem>().Play();
+	}
+
+
+	[PunRPC]
+	public void Bleed() {
+		BloodParticleEffect.GetComponent<ParticleSystem>().Play();
+	}
 
 }
