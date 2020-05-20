@@ -5,20 +5,21 @@ using Photon.Pun;
 
 public class GroundSensor : MonoBehaviourPunCallbacks {
 
-	public MasterController m_root;
+	public Transform model;
+	public MasterController masterController;
 
 	void Start()
 	{
-		m_root = this.transform.root.GetComponent<MasterController>();
+		model = this.transform.root.Find("Model");
+		masterController = model.GetComponent<MasterController>();
 	}
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log("trigger entered!");
 		if (photonView.IsMine) {
 			if (other.CompareTag("Ground") || other.CompareTag("Block") || other.CompareTag("Player")) {
-				m_root.isGrounded = true;
-				if (!m_root.CheckIsAnimActive("Attack") && !m_root.CheckIsAnimActive("Roll")) {
+				masterController.isGrounded = true;
+				if (!masterController.CheckIsAnimActive("Attack") && !masterController.CheckIsAnimActive("Roll")) {
 					photonView.RPC("playAnimPassFunc", RpcTarget.All, "Idle");
 				}
 			}
@@ -27,11 +28,10 @@ public class GroundSensor : MonoBehaviourPunCallbacks {
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		Debug.Log("trigger exited!");
 		if (photonView.IsMine) {
 			if (other.CompareTag("Ground") || other.CompareTag("Block") || other.CompareTag("Player")) {
-				m_root.isGrounded = false;
-				if (!m_root.CheckIsAnimActive("Attack") && !m_root.CheckIsAnimActive("Roll")) {
+				masterController.isGrounded = false;
+				if (!masterController.CheckIsAnimActive("Attack") && !masterController.CheckIsAnimActive("Roll")) {
 					photonView.RPC("playAnimPassFunc", RpcTarget.All, "Jump");
 				}
 			}
@@ -40,6 +40,6 @@ public class GroundSensor : MonoBehaviourPunCallbacks {
 
 	[PunRPC]
 	public void playAnimPassFunc(string action) {
-		m_root.playAnim(action);
+		masterController.playAnim(action);
 	}
 }

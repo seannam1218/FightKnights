@@ -186,7 +186,6 @@ public class MasterController : MonoBehaviourPunCallbacks
 
 	[PunRPC]
 	void SwitchLayerTo(int i) {
-		Debug.Log("switching to layer " + i);
 		gameObject.layer = i;
 	}
 

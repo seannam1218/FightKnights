@@ -9,9 +9,6 @@ ScriptsOnlyBuild:
     - MasterController
     - SpawnManager
     PhotonUnityNetworking.Editor.dll:
-    - Photon.Pun.PhotonRigidbody2DViewEditor
-    - Photon.Pun.PhotonTransformViewEditor
-    - Photon.Pun.PhotonViewInspector
     - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonRigidbody2DView
@@ -587,7 +584,7 @@ ScriptsOnlyBuild:
     className: TextButtonTransition
   - hash:
       serializedVersion: 2
-      Hash: dcd42b5e4fcea260156a6a52c496abb6
+      Hash: 4f92358b903dedb6f76f168044c6fb15
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraController
@@ -815,7 +812,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: d685c4aee7c7ac96bc7266f6867c7702
+      Hash: ac8d2d373c067bfc0026253622e6c042
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GroundSensor
