@@ -49,18 +49,12 @@ public class MasterController : MonoBehaviourPunCallbacks
 		playerAnim = this.GetComponent<Animator>();
 		playerRigidbody = this.GetComponent<Rigidbody2D>();
 		weaponCollider = GameObject.Find("WeaponCollider");
+		photonView.RPC("SwitchLayerTo", RpcTarget.All, PLAYER);
 
 		if (photonView.IsMine) {
 			camera.SetActive(true);
 			crosshair.SetActive(true);
 			photonView.RPC("WeaponColliderSetActive", RpcTarget.All, false);
-
-			SwitchLayerTo(LOCALPLAYER);
-			Transform[] allChildren = GetComponentsInChildren<Transform>();
-			foreach (Transform child in allChildren)
-			{
-				child.gameObject.layer = LOCALPLAYER;
-			}
 		}	
 	}
 
@@ -69,7 +63,6 @@ public class MasterController : MonoBehaviourPunCallbacks
 		if (photonView.IsMine) {
 			photonView.RPC("FaceCorrectDirection", RpcTarget.All);
 			AnimUpdate();
-			// photonView.RPC("MovementUpdate", RpcTarget.All);
 			MovementUpdate();
 		}
 	}
@@ -156,6 +149,7 @@ public class MasterController : MonoBehaviourPunCallbacks
 				StartCoroutine(ActivateHitBox());
 			}
 			if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))) {
+				isRolling = true;
 				StartCoroutine(NegateCollider()); //make the collider temporarily transparent to other players' colliders
 			}
 			//jump
@@ -174,6 +168,7 @@ public class MasterController : MonoBehaviourPunCallbacks
 		photonView.RPC("WeaponColliderSetActive", RpcTarget.All, true);
 		yield return new WaitForSeconds(attackDuration);
 		photonView.RPC("WeaponColliderSetActive", RpcTarget.All, false);
+		isRolling = false;
 	}
 
 	[PunRPC]
@@ -183,9 +178,10 @@ public class MasterController : MonoBehaviourPunCallbacks
 
 	IEnumerator NegateCollider() {
 		yield return new WaitForSeconds(rollDelay);
-		photonView.RPC("SwitchLayerTo", RpcTarget.All, 13);
+		photonView.RPC("SwitchLayerTo", RpcTarget.All, PLAYERBACK);
 		yield return new WaitForSeconds(rollDuration);
-		photonView.RPC("SwitchLayerTo", RpcTarget.All, 11);
+		photonView.RPC("SwitchLayerTo", RpcTarget.All, PLAYER);
+		isRolling = false;
 	}
 
 	[PunRPC]
@@ -241,17 +237,20 @@ public class MasterController : MonoBehaviourPunCallbacks
 		isJumping = val;
 	}
 
-
 	[PunRPC]
 	void AddJumpForce(float force) {
 		playerRigidbody.AddForce(Vector2.up * force, ForceMode2D.Impulse);
 	}
 
-	[PunRPC]
-	public void ToggleIsGrounded() {
-		BloodParticleEffect.GetComponent<ParticleSystem>().Play();
+	//hurt check------------------------------------------------------------------
+	private void OnTriggerEnter2D(Collider2D other) {
+		if (photonView.IsMine) {
+			if (other.gameObject.tag == "Weapon") {
+				Debug.Log(gameObject.tag + " took damage!");
+				photonView.RPC("Bleed", RpcTarget.All);
+			}
+		}
 	}
-
 
 	[PunRPC]
 	public void Bleed() {

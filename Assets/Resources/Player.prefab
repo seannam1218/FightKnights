@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3409874687447927313}
   - component: {fileID: 5914403667449824929}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: WeaponCollider
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6202147730227338369}
   - component: {fileID: 6202147730227338374}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,10 +152,10 @@ GameObject:
   - component: {fileID: 6202147730235110418}
   - component: {fileID: 1013433973073596716}
   - component: {fileID: 2723646328677127899}
-  - component: {fileID: 7885705655659374024}
   - component: {fileID: -6566275309901437739}
-  - component: {fileID: 9017503727142784492}
-  m_Layer: 11
+  - component: {fileID: 4001049111444012336}
+  - component: {fileID: 2867655401097320216}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -263,20 +263,6 @@ MonoBehaviour:
   initialJumpForce: 11
   additionalJumpForce: 0.5
   rollSpeedMultiplier: 1.1
---- !u!114 &7885705655659374024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6202147730235110431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f3458c720fcca0128b2096cf760399a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BloodParticleEffect: {fileID: 5597519196527799178}
-  photonView: {fileID: -6566275309901437739}
 --- !u!114 &-6566275309901437739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,14 +278,31 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 2
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 9017503727142784492}
+  - {fileID: 2867655401097320216}
+  - {fileID: 4001049111444012336}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &9017503727142784492
+--- !u!114 &4001049111444012336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6202147730235110431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 2
+--- !u!114 &2867655401097320216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -323,7 +326,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6202147730838808262}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6202147731074895682}
   - component: {fileID: 6202147731074895683}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Leg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6202147731416135975}
   - component: {fileID: 6202147731416135972}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +521,9 @@ GameObject:
   - component: {fileID: 6202147731420501290}
   - component: {fileID: 6202147731420501288}
   - component: {fileID: 6202147731420501291}
-  m_Layer: 11
+  - component: {fileID: 8606462287578478059}
+  - component: {fileID: 2859356854001047883}
+  m_Layer: 8
   m_Name: GroundSensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +583,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_root: {fileID: 2723646328677127899}
-  photonView: {fileID: 0}
+--- !u!114 &8606462287578478059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6202147731420501301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 1
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 2859356854001047883}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &2859356854001047883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6202147731420501301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &6202147731642273660
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,7 +630,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6202147731642273661}
   - component: {fileID: 6202147731642273650}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -671,7 +712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6202147731672892128}
   - component: {fileID: 6202147731672892129}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Leg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,7 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6202147732015703774}
   - component: {fileID: 6202147732015703775}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -840,7 +881,7 @@ GameObject:
   - component: {fileID: 4797084853084098617}
   - component: {fileID: 3390786895383027973}
   - component: {fileID: 1100454971949297150}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -948,7 +989,7 @@ GameObject:
   - component: {fileID: 6199486811828745586}
   - component: {fileID: 3510277727641828014}
   - component: {fileID: 2673493202809895123}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1038,16 +1079,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6202147730235110419}
     m_Modifications:
-    - target: {fileID: 5923209270352357722, guid: 9dd68eb5de868e0bc99f9a0cafbe96c0,
-        type: 3}
-      propertyPath: m_Name
-      value: BloodParticleEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 5923209270352357722, guid: 9dd68eb5de868e0bc99f9a0cafbe96c0,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 7401276499093434177, guid: 9dd68eb5de868e0bc99f9a0cafbe96c0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1102,6 +1133,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923209270352357722, guid: 9dd68eb5de868e0bc99f9a0cafbe96c0,
+        type: 3}
+      propertyPath: m_Name
+      value: BloodParticleEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923209270352357722, guid: 9dd68eb5de868e0bc99f9a0cafbe96c0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7686481416336491032, guid: 9dd68eb5de868e0bc99f9a0cafbe96c0,
         type: 3}

@@ -17,7 +17,7 @@ public class HurtCheck : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (PhotonNetwork.LocalPlayer.IsLocal) {
-			Debug.Log(gameObject.name + " took damage!");
+			// Debug.Log(gameObject.name + " took damage!");
 			if (other.gameObject.tag == "Weapon") {
 				// photonView.RPC("Bleed", RpcTarget.All);
 				Bleed();
